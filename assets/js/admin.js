@@ -298,8 +298,12 @@ function handleFileUpload(source, preview, folder = 'products') {
             }
             
             showNotification('Imágenes subidas correctamente', 'success');
+            if (data.errors && data.errors.length > 0) {
+                showNotification('Algunas imágenes no se subieron: ' + data.errors.join('; '), 'warning');
+            }
         } else {
-            showNotification('Error al subir imágenes: ' + data.message, 'error');
+            const msg = data.errors && data.errors.length ? data.errors.join('; ') : data.message;
+            showNotification('Error al subir imágenes: ' + msg, 'error');
         }
     })
     .catch(error => {
